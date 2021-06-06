@@ -14,6 +14,10 @@ Conditions:
   UsePublicLambda: !Equals
     - !Ref 'CFNSESProviderZipFileName'
     - ''
+Outputs:
+  CFNSESProviderArn:
+    Description: The ServiceToken for the CFNSESProvider lambda.
+    Value: !GetAtt CFNSESProvider.Arn
 Resources:
   LambdaPolicy:
     Type: AWS::IAM::Policy
@@ -28,7 +32,7 @@ Resources:
             Action:
               - lambda:InvokeFunction
             Resource:
-              - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:binxio-cfn-ses-provider'
+              - !Ref CFNSESProvider
           - Effect: Allow
             Action:
               - route53:GetHostedZone
@@ -89,7 +93,6 @@ Resources:
           - UsePublicLambda
           - lambdas/cfn-ses-provider-0.7.0.zip
           - !Ref 'CFNSESProviderZipFileName'
-      FunctionName: binxio-cfn-ses-provider
       Handler: ses.handler
       MemorySize: 128
       Role: !GetAtt 'LambdaRole.Arn'
