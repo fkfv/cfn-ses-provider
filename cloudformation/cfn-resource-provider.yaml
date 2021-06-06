@@ -31,8 +31,7 @@ Resources:
           - Effect: Allow
             Action:
               - lambda:InvokeFunction
-            Resource:
-              - !Ref CFNSESProvider
+            Resource: '*'
           - Effect: Allow
             Action:
               - route53:GetHostedZone
