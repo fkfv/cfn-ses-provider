@@ -1,2 +1,6 @@
 boto3
 cfn_resource_provider>=1.0.3
+requests
+future
+jsonschema
+requests[security]
