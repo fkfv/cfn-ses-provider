@@ -82,7 +82,6 @@ Resources:
           - UsePublicLambda
           - !Sub 'TODO'
           - !Ref 'LambdaImageUri'
-      Handler: ses.handler
       MemorySize: 128
       Role: !GetAtt 'LambdaRole.Arn'
       Timeout: 30
