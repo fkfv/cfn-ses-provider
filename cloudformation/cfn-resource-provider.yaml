@@ -4,10 +4,6 @@ Parameters:
   LambdaImageUri:
     Type: String
     Default: ''
-Conditions:
-  UsePublicLambda: !Equals
-    - !Ref 'LambdaImageUri'
-    - ''
 Outputs:
   CFNSESProviderArn:
     Description: The ServiceToken for the CFNSESProvider lambda.
@@ -78,10 +74,7 @@ Resources:
     Properties:
       Description: CloudFormation SES provider implementation
       Code:
-        ImageUri: !If
-          - UsePublicLambda
-          - !Sub 'TODO'
-          - !Ref 'LambdaImageUri'
+        ImageUri: !Ref 'LambdaImageUri'
       MemorySize: 128
       Role: !GetAtt 'LambdaRole.Arn'
       Timeout: 30
