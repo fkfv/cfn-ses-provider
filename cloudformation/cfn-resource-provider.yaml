@@ -87,3 +87,4 @@ Resources:
       Role: !GetAtt 'LambdaRole.Arn'
       Runtime: python3.6
       Timeout: 30
+      PackageType: Image
