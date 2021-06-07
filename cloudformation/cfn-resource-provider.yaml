@@ -1,18 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation SES Providers
 Parameters:
-  LambdaS3Bucket:
-    Type: String
-    Default: ''
-  CFNSESProviderZipFileName:
+  LambdaImageUri:
     Type: String
     Default: ''
 Conditions:
-  UsePublicBucket: !Equals
-    - !Ref 'LambdaS3Bucket'
-    - ''
   UsePublicLambda: !Equals
-    - !Ref 'CFNSESProviderZipFileName'
+    - !Ref 'LambdaImageUri'
     - ''
 Outputs:
   CFNSESProviderArn:
@@ -84,14 +78,10 @@ Resources:
     Properties:
       Description: CloudFormation SES provider implementation
       Code:
-        S3Bucket: !If
-          - UsePublicBucket
-          - !Sub 'binxio-public-${AWS::Region}'
-          - !Ref 'LambdaS3Bucket'
-        S3Key: !If
+        ImageUri: !If
           - UsePublicLambda
-          - lambdas/cfn-ses-provider-0.7.0.zip
-          - !Ref 'CFNSESProviderZipFileName'
+          - !Sub 'TODO'
+          - !Ref 'LambdaImageUri'
       Handler: ses.handler
       MemorySize: 128
       Role: !GetAtt 'LambdaRole.Arn'
