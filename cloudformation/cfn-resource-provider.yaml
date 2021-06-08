@@ -38,6 +38,7 @@ Resources:
               - ses:SetActiveReceiptRuleSet
               - ses:GetIdentityVerificationAttributes
               - ses:GetIdentityNotificationAttributes
+              - ses:GetIdentityMailFromDomainAttributes
               - ses:SetIdentityNotificationTopic
               - ses:SetIdentityHeadersInNotificationsEnabled
               - ses:SetIdentityFeedbackForwardingEnabled
