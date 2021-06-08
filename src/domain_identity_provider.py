@@ -7,6 +7,12 @@ from ses_provider import SESProvider
 class DomainIdentityProvider(SESProvider):
     def __init__(self):
         super().__init__()
+        self.request_schema = deepcopy(self.request_schema)
+        self.request_schema['properties']['ReceiveEnabled'] = {"type": "boolean",
+                                                                "default": False
+                                                                "description": "generate the required mx records "
+                                                                               "to receive mail on the domain "
+                                                                               " identity. default is false"}
 
     def get_token(self):
         try:
@@ -25,6 +31,16 @@ class DomainIdentityProvider(SESProvider):
                     "ResourceRecords": [f'"{token}"'],
                 }
             )
+
+            if self.receive_enabled:
+                recordset.update(
+                    {
+                        "Type": "MX",
+                        "Name": f"{self.domain}.",
+                        "ResourceRecords": [f"10 inbound-smtp.{self.region}.amazonaws.com."],
+                    }
+                )
+
             self.set_attribute("Domain", self.domain)
             self.set_attribute("Region", self.region)
             self.set_attribute("RecordSets", [recordset])
@@ -34,6 +50,11 @@ class DomainIdentityProvider(SESProvider):
             )
             if not self.physical_resource_id:
                 self.physical_resource_id = "could-not-create"
+
+    @property
+    def receive_enabled(self):
+        return self.get('ReceiveEnabled')
+    
 
     def create(self):
         if not self.identity_already_exists():
