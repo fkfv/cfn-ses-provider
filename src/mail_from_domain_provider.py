@@ -65,7 +65,7 @@ class MailFromDomainProvider(SESProvider):
             if mx_failure_behaviour is None:
                 mx_failure_behaviour = "UseDefaultValue"
 
-            ses.set_identity_mail_from_domain(Identity=self.domain, MailFromDomain=self.mail_from_subdomain,
+            ses.set_identity_mail_from_domain(Identity=self.domain, MailFromDomain=f"{self.mail_from_subdomain}.{self.domain}",
                                               BehaviorOnMXFailure=mx_failure_behaviour)
 
             self.physical_resource_id = f"{self.domain}@{self.region}"
