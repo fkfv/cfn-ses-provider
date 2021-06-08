@@ -83,6 +83,9 @@ class DomainIdentityProvider(SESProvider):
             except ClientError as e:
                 self.success(f"ignoring failed delete of identity, {e}")
 
+    def convert_property_types(self):
+        self.heuristic_convert_property_types(self.properties)
+
 
 provider = DomainIdentityProvider()
 
