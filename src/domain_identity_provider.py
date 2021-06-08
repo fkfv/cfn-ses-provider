@@ -9,7 +9,7 @@ class DomainIdentityProvider(SESProvider):
         super().__init__()
         self.request_schema = deepcopy(self.request_schema)
         self.request_schema['properties']['ReceiveEnabled'] = {"type": "boolean",
-                                                                "default": False
+                                                                "default": False,
                                                                 "description": "generate the required mx records "
                                                                                "to receive mail on the domain "
                                                                                " identity. default is false"}
